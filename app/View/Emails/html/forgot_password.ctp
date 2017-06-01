@@ -1,0 +1,1 @@
+<a href="http://www.jumplyfe.com/reset_password"> Click here to verify your account </a>

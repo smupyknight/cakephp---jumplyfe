@@ -1,0 +1,34 @@
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<link href="css/jquery-ui.css" rel="stylesheet">
+<body>
+<input type="text" class="autoCompletetext">
+<script type="text/javascript">
+$(function(){
+	
+		$('.autoCompletetext').autocomplete({
+		
+			source: '/imnn',
+			minLength: 2,
+			select: function(event, ui) {
+				 $(".autoCompletetext").val(ui.item.label);
+				 //window.search_city_id = ui.item.id;
+			   //getCityPricesByCityID();
+			   return false
+			  
+			},
+	 
+			html: true, // optional (jquery.ui.autocomplete.html.js required)
+	 
+		  // optional (if other layers overlap autocomplete list)
+			open: function(event, ui) {
+				 $(this).autocomplete('widget').css('z-index', 9999999);
+				 return false;
+			
+			}
+		});
+	 });
+	 //getCityPricesByCityID();
+
+</script>
+</body>

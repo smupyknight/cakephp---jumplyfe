@@ -1,0 +1,374 @@
+.ajax_alert{
+	display:none;
+	margin: 13px 16px 30px;
+	border-radius: 4px;
+}
+.signup-modal .modal-body label {
+    font-size: 12px;
+}
+.signup-modal .modal-body a {
+    border: medium none;
+    border-radius: 4px;
+    color: #fff;
+    font-family: "Open Sans",sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    width: 210px;
+}
+.signup-modal a.btn-default {
+    background:#2a7fb8;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 16px;
+    margin: 20px 0;
+    padding: 8px 8px 12px;
+    text-transform: none;
+    width: inherit;
+}
+.signup-modal a.btn-twitter {
+    background: #3598dc;
+}
+.signup-modal a.btn-instagram {background: #c9302c;}
+.signup-modal a i {
+    font-size: 26px;
+    font-weight: 600;
+    margin-right: 20px;
+    padding: 0
+}
+.signup-modal .modal-footer {
+    padding-top: 0;
+}
+.signup-modal .modal-body {
+    padding-bottom: 0;
+}
+.no-record{
+	font-size:24px;
+	text-align:center;
+	color:#b5b5b5;
+	width:100%;
+	text-transform:uppercase;
+    margin: 80px 0
+}
+.no-record span{
+	margin-top:100px;
+	height:100%;
+}
+.myprofile .iframe{min-height: 193px; border: none; width: 100%; margin: 0}
+.message_notify_new{
+	background-color: #7cc9c1 !important;
+    color: #009966 !important;
+    opacity: 0.86;
+    transition: all 0.6s ease-in-out 0.0s;
+}
+.my_timeline_alert{
+	border:#F00 solid 1px;
+    opacity: 0.86;
+    transition: all 0.3s ease, background-position 5ms;
+}
+.timeline_body .post_img{
+	width:100%;
+}
+#shareFeedPopup{
+	z-index:1050 !important;
+}
+.chatSection .chatUsers{
+	height:566px;
+	overflow:auto;
+    float: left;
+}
+
+.chatSection.chatDataOverall .chatBlock{overflow: hidden; display: block;}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    background-color: #dedede;
+}
+
+/*responsive*/
+
+@media(max-width: 480px){
+     .chatSection .chatUsers{float: none; display: block; width: 100%; margin: 0 0 15px; height: auto;}
+ .chat_messages{height: auto; max-height: 400px; min-height: 100px}
+}
+
+.cancel_button{
+	float:right;
+}
+.nav-tabs > li {
+    background: none repeat scroll 0 0 #25ad9f;
+	text-align: center;
+    width: 33.33%;
+	text-align:center;
+    border-right: 1px solid #fff
+}
+.nav-tabs > li a{
+	font-size:16px;
+    border:none !important;
+}
+
+.nav-tabs > li > a{margin-right: 0px !important}
+.nav-tabs > li > a:hover{background: #dedede; color: #555555}
+.my_searching_tabs{
+	margin-left:15px;
+	margin-top:10px;
+}
+.my_searching_tabs li.active > a:focus, .my_searching_tabs li.active > a:active , .my_searching_tabs li.active > a:hover {
+    background: #dedede;
+    border-color: #dddddd #dddddd transparent;
+}
+.search_Jumphost_Image{
+	min-width:100%;
+	height:266px;
+}
+
+.booked_hotel_img{
+	background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 1px;
+    display: block;
+    height: 218px;
+    line-height: 1.42857;
+    margin-bottom: 20px;
+    padding: 4px;
+    transition: border 0.2s ease-in-out 0s;
+    width: 250px;
+	
+
+}
+
+.booked_hotel_details_img{
+	background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 1px;
+    display: block;
+    height: 260px;
+    line-height: 1.42857;
+    margin-bottom: 20px;
+    padding: 4px;
+    transition: border 0.2s ease-in-out 0s;
+    width: 250px;
+	
+
+}
+
+li{
+	list-style-type: none;
+}
+.twitter-typeahead{
+	border-style:none !important;
+}
+.tt-selectable{
+	font-size: 14px;
+    padding: 6px 10px;
+}
+.tt-selectable:hover, .tt-selectable:active, .tt-selectable:focus, .tt-cursor {
+    background: #2db0a2 none repeat scroll 0 0;
+    color: white;
+    cursor: pointer;
+}
+.languageLink a.disabled, languageLink a.disabled:active, languageLink a.disabled:focus{
+    cursor: progress;
+    background:#eee;
+    color: gray;
+}
+
+.open{
+	display:block;
+
+}
+
+.datepicker.datepicker-dropdown{z-index: 9999 !important}
+.radio-group input{margin-right: 8px}      
+.radio-group label{margin-right: 20px; font-weight: normal;}		
+
+.comingSoon{
+	text-align:center;
+
+}
+
+.no_jump_mate{
+	margin-bottom:10px !important;
+}
+.comment_options{
+	display:none;
+	margin:4px 14px;
+	float:right;
+}
+.commentRecord .indi_comment:hover{
+	 background: #e9ffff none repeat scroll 0 0
+}
+.commentRecord .indi_comment:hover .comment_options{
+	display:block;
+}
+.commentRecord .indi_comment .delete_this_comment{
+	 cursor:pointer;
+}
+.full-width{
+	width:100%;
+}
+.text-upper{
+	text-transform: uppercase;
+}
+.btn-full{
+	width:100%;
+	text-transform: uppercase;
+}
+.default_link_style{
+    text-decoration: none;
+    color: #25ad9f;
+}
+.default_link_style:hover{
+    text-decoration: none;
+    color: #7fb6a1;
+}
+.btn-primary {
+    background-color: #25ad9f;
+    border-color: #1b7d73;
+    color: #ffffff !important;
+    text-transform: uppercase;
+}
+
+.checkout_small{
+
+	float:right;
+	font-size:16px;
+}
+.twitter-typeahead{
+    display: unset !important;
+}
+
+.topFeature_content{
+
+	overflow:hidden;
+	
+}
+
+
+.profile_user_name{
+	color:#25ad9f !important;
+}
+
+
+
+.Book_JumpRental_Image{
+	height: 190px;
+    width: 250px;
+}
+
+.group_no_Image{
+	height:138px;
+}
+
+.ad_bottom{
+    padding-top: 18px;
+}
+.ad_bottom img{
+    width: 100%;
+}
+
+.jumper_serches{
+	float:none !important; 
+	margin:5px 0px 5px 0px; 
+}
+
+.help_title{
+	color: #25ad9f;
+}
+
+.invite_user_title{
+	text-align:left !important;
+
+}
+
+.bgvid{
+	width:100%;
+	height:auto;	
+}
+
+.bannerIframe iframe{
+	width:100%;
+	height:100%;	
+
+}
+
+.frnd_reqst{padding:10px ; background:#f1f3f5; margin-bottom:10px}
+.frnd_reqst .people_name{padding-top:0px; margin-top:0}
+.frnd_reqst .people_name h4{margin-bottom:10px}
+
+.jump_mates_text{
+	color:#25ad9f !important; 
+	text-decoration:none !important;
+	}
+	
+.rental_price_list span{
+display:inline-block; min-width:70px; padding-right:5px; font-weight:600;
+}
+.rental_price_list li{
+border-bottom:1px solid #ccc;
+}
+
+.rental_price_list li:first-child{
+	font-size:14px;
+}
+
+.jump_detail_map_popup{
+	height:200px !important;
+	max-width:100%;
+}
+.jump_details h4{
+	margin:0 0 20px
+}
+
+.showJumpDetailBtn{
+	margin-left:15px;
+	margin-top:13px; 
+}
+.recent {
+    height: 247px !important;
+    max-width: 391px !important;
+    overflow: hidden !important;
+    /*width: 391px !important;*/
+}
+.recent img {
+    /*width: 100% !important;*/
+    height: auto !important;
+    padding: 10px;
+}
+
+.top_section label {
+  background: none repeat scroll 0 0 #25ad9f;
+  border-radius: 50%;
+  color: #fff;
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 300;
+  height: 20px;
+  line-height: 20px;
+  margin-left: 15px;
+  margin-right: -44px;
+  position: relative;
+  text-align: center;
+  top: -13px;
+  width: 20px;
+}
+
+.site_security_image{
+	margin-top: 20px;
+}
+.ftr-logo{display:inline-block}
+
+.search_forms_inner .twitter-typeahead {
+  display: inline-block !important;
+}
+.search_forms_inner .twitter-typeahead .tt-menu {
+  position: absolute !important; padding: 0
+}
+.search_forms_inner .tt-suggestion:hover {
+  background: #2db0a2
+}
+
+

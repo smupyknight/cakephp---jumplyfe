@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+	
+<!-- Mirrored from www.jumplyfe.com/welcomes/policies by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 17 Sep 2015 16:37:09 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>JumpLyfe - Be A Jumper!</title>
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+		<link rel="shortcut icon" href="../jumplyfe/favicon.html" />
+		<link rel="icon" type="image/png" href="../jumplyfe/favicon.html" />
+		<link rel="apple-touch-icon" href="../jumplyfe/favicon.html" />
+		<meta name="description" content="" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<meta name="keywords" content="" />
+		<link href="../favicon.ico" type="image/x-icon" rel="icon" /><link href="../favicon.ico" type="image/x-icon" rel="shortcut icon" />		
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/jquery-ui.js"></script>
+	<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../js/bootstrap-timepicker.js"></script>
+	<script type="text/javascript" src="../js/jquery.form.js"></script>
+	<script type="text/javascript" src="../js/script.js"></script>
+	<script type="text/javascript" src="../js/select2.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.noty.packaged.min.js"></script>
+	<script type="text/javascript" src="../js/star-rating.js"></script>
+	<script type="text/javascript" src="../js/bootstrap-switch.js"></script>
+	<script type="text/javascript" src="../js/jwplayer.js"></script>
+	<script type="text/javascript" src="../js/jquery.infinitescroll.min.js"></script>
+	<script type="text/javascript" src="../js/typeahead.bundle.js"></script>
+	<script type="text/javascript" src="../js/jquery.fancybox.pack.js"></script>
+		<script type="text/javascript">jwplayer.key="1lv5l1D4IRjT0TgGMbiIma9JNzSIB4Q5HUPVCA==";</script>
+		
+	<link rel="stylesheet" type="text/css" href="../css/jquery-ui.css" />
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.css" />
+	<link rel="stylesheet" type="text/css" href="../css/font-awesome.min.css" />
+	<link rel="stylesheet" type="text/css" href="../css/my_css.css" />
+	<link rel="stylesheet" type="text/css" href="../css/select2.min.css" />
+	<link rel="stylesheet" type="text/css" href="../css/notify-animate.css" />
+	<link rel="stylesheet" type="text/css" href="../css/star-rating.css" />
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap-switch.css" />
+	<link rel="stylesheet" type="text/css" href="../css/jquery.fancybox.css" />
+						<script src="../../cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+		<link href="../../eternicode.github.io/bootstrap-datepicker/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet">
+		<script type="text/javascript">
+			$(function(){
+				
+				$(".close").click(function(){
+					$(".alert-message").fadeOut();
+				});
+				$(".ajax_alert .close").click(function(e){
+					e.preventDefault();
+					$(this).closest('.ajax_alert').fadeOut();
+					return false;
+				});
+				$(".datepicker").datepicker({
+					format: "dd-mm-yyyy",
+					startDate: "today"
+				}); 
+				
+				
+				$('.datepicker').on('changeDate', function(ev){
+					$(this).datepicker('hide');
+				});
+			});
+			
+			var SiteUrl =  '../index.php';
+			</script> 
+			
+		<script type="text/javascript">
+		$(function(){
+			$(".fancybox").fancybox();
+			//$('.ajax_form').submit(function(event){
+			$(document).on("submit", '.ajax_form', function(event) { 
+				var $submitBTN = $(this).find('button[type="submit"]');
+				var $btnText = $submitBTN.text();
+				$submitBTN.text('Loading...');
+				$submitBTN.attr('disabled','disabled');
+				var posturl=$(this).attr('action');
+				var $this = $(this).closest('form');
+				var formID =$(this).attr('id');
+				var formClass =$(this).attr('class');
+				if(!formID)
+				formID = formClass;
+				$(this).ajaxSubmit({
+								url: posturl,
+								dataType: 'json',
+								success: function(response){
+									$submitBTN.removeAttr('disabled');
+									$submitBTN.text($btnText);
+									$($this).find('.ajax_alert').removeClass('alert-danger').removeClass('alert-success');
+									$($this).find('.ajax_alert').fadeOut('fast')
+									if(response.success)
+									 {
+										$($this).find('.ajax_alert').addClass('alert-success');
+										window.madeChangeInForm = false;
+									 }
+									 else
+									 {
+										 $($this).find('.ajax_alert').addClass('alert-danger');
+									 }
+									if(response.message)
+									{
+										if(response.notify)
+										{
+											var notyData = [];
+											notyData.message = response.message;
+											if(response.success)
+											{
+												notyData.type = 'success';
+											}
+											else
+											{
+												notyData.type = 'error';
+											}
+											
+											nofifyMessage(notyData);
+										}
+										else
+										{
+											$($this).find('.ajax_alert').fadeIn('slow').children('.ajax_message').html(response.message);
+										}
+									}
+									if(response.redirectURL)
+									window.location.href=response.redirectURL;
+									if(response.scrollToThisForm)
+									slideToElement($this);
+									if(response.selfReload)
+									window.location.reload();
+									if(response.resetForm)
+									$($this).resetForm();
+									if(response.changeLoginState)
+									changeLoginState(response);
+									if(response.callBackFunction)
+									callBackMe(response.callBackFunction,response);
+								
+								},
+								error:function(response){
+									$submitBTN.removeAttr('disabled');
+								}
+							});
+				return false;
+			});
+			$('.modal').on('hidden.bs.modal', function () {
+				$(this).find('.ajax_alert').hide('slow');
+			});
+		});
+
+		function callBackMe(functionName,data)
+		{
+			window[functionName](data);
+		}
+		function slideToElement(element,callback)
+		{
+			$("html, body").animate({scrollTop: $(element).offset().top }, 1000,function(){
+				if(callback)
+				{
+					callback.call();
+				}
+			});
+		}
+		function nofifyMessage(data)
+		{
+			type = data.type;
+			message = data.message;
+			type = type?type:'warning'; // success,error,information,success
+			message = message?message:'This is Test Message <span>by Vikas</span>';
+			var iconClass = '';
+			if(type == 'warning')
+			{
+				iconClass = '<i class="fa fa-exclamation-triangle text-danger"></i>';
+			}
+			else if(type == 'success')
+			{
+				iconClass = '<i class="fa fa-check-circle text-success"></i>';
+			}
+			else if(type == 'error')
+			{
+				iconClass = '<i class="fa fa-times-circle text-danger"></i>';
+			}
+			else if(type == 'information')
+			{
+				iconClass = '<i class="fa fa-info-circle text-info"></i>';
+			}
+			
+			message = '<div class="activity-item">'+iconClass+'<div class="activity">'+message+'</div> </div>';
+			//$.notify("This is demo message", type);
+			var n = noty({
+                text        : message,
+                type        : type,
+                dismissQueue: true,
+                layout      : 'topLeft',
+                closeWith   : ['click'],
+                theme       : 'relax',
+                maxVisible  : 10,
+				timeout: 4000, 
+				force: false,
+				modal: false,
+                animation   : {
+                    open  : 'animated bounceInLeft',
+                    close : 'animated bounceOutRight',
+                    easing: 'swing',
+                    speed : 1200
+                }
+            });
+		}
+		</script>
+		<script type="text/javascript" src="../js/browser.js"></script>	</head>
+	<body>
+		<script type="text/javascript">
+			$(function() {
+				$(".close").click(function() {
+					$(".alert-message").fadeOut();
+				});
+			});
+		</script>
+		
+
+<div class="header not_login">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+								<a href="../index.php" class="logo"><img src="../img/logo.png" class="img-responsive" alt="" /></a>			</div>
+			<div class="col-md-6">
+				<div class="top_bar">
+				  <a href="JavaScript:" onclick="openPreRegisterPopUp()" class="signup active">signup</a>
+				  <a href="JavaScript:" onclick="openLoginPopup()" class="login">login</a>
+				  <div class="social_icon">
+						<a href="https://www.instagram.com/jumplyfe" target="_blank"><i class="fa fa-instagram"></i></a>						<a href="https://www.pinterest.com/jumplyfe" target="_blank"><i class="fa fa-pinterest-p"></i></a>						<a href="https://www.twitter.com/jumplyfe" target="_blank"><i class="fa fa-twitter"></i></a>						<a href="https://www.facebook.com/jumplyfe" target="_blank"><i class="fa fa-facebook"></i></a>				  </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+				<div class="carousel">
+		<div class="carousel slide" data-ride="carousel">
+			<div class="carousel-inner" role="listbox">
+				
+				<div class="item active">
+					<img src="../uploads/photos/1437404566Dollarphotoclub_68878771.jpg" class="img-responsive" alt="0" />					<div class="carousel-caption">
+					<a href="../login.php" class="btn btn-primary"><strong>Start</strong> a jump <i class="fa fa-play"></i></a>				</div>
+				</div>
+							</div>
+		</div>
+	</div>	
+		
+<div class="about_us">
+ <div class="container">
+    <h3 class="title">Policies</h3>
+     <dl id="accordion">
+									<dt>Website Disclaimer</dt>
+				<dd>
+					<div class="accordin_contain">
+						<strong>1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Introduction</strong><br />
+1.1&nbsp;&nbsp;&nbsp;&nbsp; This disclaimer shall govern your use of our website.<br />
+1.2&nbsp;&nbsp;&nbsp;&nbsp; By using our website, you accept this disclaimer in full; accordingly, if you disagree with this disclaimer or any part of this disclaimer, you must not use our website.<br />
+1.3&nbsp;&nbsp;&nbsp;&nbsp; Our website uses cookies; by using our website or agreeing to this disclaimer, you consent to our use of cookies in accordance with the terms of our privacy and cookies policy.<br />
+<br />
+<strong>2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Copyright Notice</strong><br />
+2.1&nbsp;&nbsp;&nbsp;&nbsp; Copyright (c) 2015 JumpLyfe, LLC.<br />
+2.2&nbsp;&nbsp;&nbsp;&nbsp; Subject to the express provisions of this disclaimer:<br />
+(a)&nbsp;&nbsp;&nbsp;&nbsp; we, together with our licensors, own and control all the copyright and other intellectual property rights in our website and the material on our website; and<br />
+(b)&nbsp;&nbsp;&nbsp;&nbsp; all the copyright and other intellectual property rights in our website and the material on our website are reserved.<br />
+<br />
+<strong>3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Licence To Use Website</strong><br />
+3.1&nbsp;&nbsp;&nbsp;&nbsp; You may:<br />
+(a)&nbsp;&nbsp;&nbsp;&nbsp; view pages from our website in a web browser;<br />
+(b)&nbsp;&nbsp;&nbsp;&nbsp; download pages from our website for caching in a web browser; and<br />
+(c)&nbsp;&nbsp;&nbsp;&nbsp; print pages from our website,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; subject to the other provisions of this disclaimer.<br />
+3.2&nbsp;&nbsp;&nbsp;&nbsp; Except as expressly permitted by Section 3.1 or the other provisions of this disclaimer, you must not download any material from our website or save any such material to your computer.<br />
+3.3&nbsp;&nbsp;&nbsp;&nbsp; You may only use our website for your own personal and business purposes, and you must not use our website for any other purposes.<br />
+3.4&nbsp;&nbsp;&nbsp;&nbsp; Unless you own or control the relevant rights in the material, you must not:<br />
+(a)&nbsp;&nbsp;&nbsp;&nbsp; republish material from our website (including republication on another website);<br />
+(b)&nbsp;&nbsp;&nbsp;&nbsp; sell, rent or sub-license material from our website;<br />
+(c)&nbsp;&nbsp;&nbsp;&nbsp; show any material from our website in public;<br />
+(d)&nbsp;&nbsp;&nbsp;&nbsp; exploit material from our website for a commercial purpose; or<br />
+(e)&nbsp;&nbsp;&nbsp;&nbsp; redistribute material from our website.<br />
+3.5&nbsp;&nbsp;&nbsp;&nbsp; We reserve the right to restrict access to areas of our website, or indeed our whole website, at our discretion; you must not circumvent or bypass, or attempt to circumvent or bypass, any access restriction measures on our website.<br />
+<br />
+<strong>4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Acceptable Use</strong><br />
+4.1&nbsp;&nbsp;&nbsp;&nbsp; You must not:<br />
+(a)&nbsp;&nbsp;&nbsp;&nbsp; use our website in any way or take any action that causes, or may cause, damage to the website or impairment of the performance, availability or accessibility of the website;<br />
+(b)&nbsp;&nbsp;&nbsp;&nbsp; use our website in any way that is unlawful, illegal, fraudulent or harmful, or in connection with any unlawful, illegal, fraudulent or harmful purpose or activity;<br />
+(c)&nbsp;&nbsp;&nbsp;&nbsp; use our website to copy, store, host, transmit, send, use, publish or distribute any material which consists of (or is linked to) any spyware, computer virus, Trojan horse, worm, keystroke logger, rootkit or other malicious computer software;<br />
+(d)&nbsp;&nbsp;&nbsp;&nbsp; conduct any systematic or automated data collection activities (including without limitation scraping, data mining, data extraction and data harvesting) on or in relation to our website without our express written consent;<br />
+(e)&nbsp;&nbsp;&nbsp;&nbsp; access or otherwise interact with our website using any robot, spider or other automated means;<br />
+(f)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; violate the directives set out in the robots.txt file for our website; or<br />
+(g)&nbsp;&nbsp;&nbsp;&nbsp; use data collected from our website for any direct marketing activity (including without limitation email marketing, SMS marketing, telemarketing and direct mailing).<br />
+4.2&nbsp;&nbsp;&nbsp;&nbsp; You must not use data collected from our website to contact individuals, companies or other persons or entities.<br />
+4.3&nbsp;&nbsp;&nbsp;&nbsp; You must ensure that all the information you supply to us through our website, or in relation to our website, is true, accurate, current, complete and non-misleading.<br />
+<br />
+<strong>5.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Limited Warranties</strong><br />
+5.1&nbsp;&nbsp;&nbsp;&nbsp; We do not warrant or represent:<br />
+(a)&nbsp;&nbsp;&nbsp;&nbsp; the completeness or accuracy of the information published on our website;<br />
+(b)&nbsp;&nbsp;&nbsp;&nbsp; that the material on the website is up to date; or<br />
+(c)&nbsp;&nbsp;&nbsp;&nbsp; that the website or any service on the website will remain available.<br />
+5.2&nbsp;&nbsp;&nbsp;&nbsp; We reserve the right to discontinue or alter any or all of our website services, and to stop publishing our website, at any time in our sole discretion without notice or explanation; and save to the extent expressly provided otherwise in this disclaimer, you will not be entitled to any compensation or other payment upon the discontinuance or alteration of any website services, or if we stop publishing the website.<br />
+5.3&nbsp;&nbsp;&nbsp;&nbsp; To the maximum extent permitted by applicable law and subject to Section 6.1, we exclude all representations and warranties relating to the subject matter of this disclaimer, our website and the use of our website.<br />
+<br />
+<strong>6.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Limitations And Exclusions Of Liability</strong><br />
+6.1&nbsp;&nbsp;&nbsp;&nbsp; Nothing in this disclaimer will:<br />
+(a)&nbsp;&nbsp;&nbsp;&nbsp; limit or exclude any liability for death or personal injury resulting from negligence;<br />
+(b)&nbsp;&nbsp;&nbsp;&nbsp; limit or exclude any liability for fraud or fraudulent misrepresentation;<br />
+(c)&nbsp;&nbsp;&nbsp;&nbsp; limit any liabilities in any way that is not permitted under applicable law; or<br />
+(d)&nbsp;&nbsp;&nbsp;&nbsp; exclude any liabilities that may not be excluded under applicable law.<br />
+6.2&nbsp;&nbsp;&nbsp;&nbsp; The limitations and exclusions of liability set out in this Section 7 and elsewhere in this disclaimer:<br />
+(a)&nbsp;&nbsp;&nbsp;&nbsp; are subject to Section 6.1; and<br />
+(b)&nbsp;&nbsp;&nbsp;&nbsp; govern all liabilities arising under this disclaimer or relating to the subject matter of this disclaimer, including liabilities arising in contract, in tort (including negligence) and for breach of statutory duty.<br />
+6.3&nbsp;&nbsp;&nbsp;&nbsp; To the extent that our website and the information and services on our website are provided free of charge, we will not be liable for any loss or damage of any nature.<br />
+6.4&nbsp;&nbsp;&nbsp;&nbsp; We will not be liable to you in respect of any losses arising out of any event or events beyond our reasonable control.<br />
+6.5&nbsp;&nbsp;&nbsp;&nbsp; We will not be liable to you in respect of any business losses, including (without limitation) loss of or damage to profits, income, revenue, use, production, anticipated savings, business, contracts, commercial opportunities or goodwill.<br />
+6.6&nbsp;&nbsp;&nbsp;&nbsp; We will not be liable to you in respect of any loss or corruption of any data, database or software.<br />
+6.7&nbsp;&nbsp;&nbsp;&nbsp; We will not be liable to you in respect of any special, indirect or consequential loss or damage.<br />
+6.8&nbsp;&nbsp;&nbsp;&nbsp; You accept that we have an interest in limiting the personal liability of our officers and employees and, having regard to that interest, you acknowledge that we are a limited liability entity; you agree that you will not bring any claim personally against our officers or employees in respect of any losses you suffer in connection with the website or this disclaimer (this will not, of course, limit or exclude the liability of the limited liability entity itself for the acts and omissions of our officers and employees).<br />
+&nbsp;<br />
+<strong>7.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Variation</strong><br />
+7.1&nbsp;&nbsp;&nbsp;&nbsp; We may revise this disclaimer from time to time.<br />
+7.2&nbsp;&nbsp;&nbsp;&nbsp; The revised disclaimer shall apply to the use of our website from the time of publication of the revised disclaimer on the website.<br />
+<br />
+<strong>8.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Severability</strong><br />
+8.1&nbsp;&nbsp;&nbsp;&nbsp; If a provision of this disclaimer is determined by any court or other competent authority to be unlawful and/or unenforceable, the other provisions will continue in effect.<br />
+8.2&nbsp;&nbsp;&nbsp;&nbsp; If any unlawful and/or unenforceable provision of this disclaimer would be lawful or enforceable if part of it were deleted, that part will be deemed to be deleted, and the rest of the provision will continue in effect.<br />
+<br />
+<strong>9.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Law And Jurisdiction</strong><br />
+9.1&nbsp;&nbsp;&nbsp;&nbsp; This disclaimer shall be governed by and construed in accordance with the law.<br />
+9.2&nbsp;&nbsp;&nbsp;&nbsp; Any disputes relating to this disclaimer shall be subject to the non-exclusive jurisdiction of the courts of America.					</div>
+				</dd>
+							<dt>Copyright Notice</dt>
+				<dd>
+					<div class="accordin_contain">
+						<strong>1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Copyright Notice</strong><br />
+1.1&nbsp;&nbsp;&nbsp;&nbsp; Copyright (c) 2015 JumpLyfe, LLC.<br />
+1.2&nbsp;&nbsp;&nbsp;&nbsp; Subject to the express provisions of this notice:<br />
+(a)&nbsp;&nbsp;&nbsp;&nbsp; we, together with our licensors, own and control all the copyright and other intellectual property rights in our website and the material on our website; and<br />
+(b)&nbsp;&nbsp;&nbsp;&nbsp; all the copyright and other intellectual property rights in our website and the material on our website are reserved.<br />
+<br />
+<strong>2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Copyright Licence</strong><br />
+2.1&nbsp;&nbsp;&nbsp;&nbsp; You may:<br />
+(a)&nbsp;&nbsp;&nbsp;&nbsp; view pages from our website in a web browser;<br />
+(b)&nbsp;&nbsp;&nbsp;&nbsp; download pages from our website for caching in a web browser;<br />
+(c)&nbsp;&nbsp;&nbsp;&nbsp; print pages from our website;<br />
+(d)&nbsp;&nbsp;&nbsp;&nbsp; stream audio and video files from our website; and<br />
+(e)&nbsp;&nbsp;&nbsp;&nbsp; use our website services by means of a web browser,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; subject to the other provisions of this notice.<br />
+2.2&nbsp;&nbsp;&nbsp;&nbsp; Except as expressly permitted by the other provisions of this notice, you must not download any material from our website or save any such material to your computer.<br />
+2.3&nbsp;&nbsp;&nbsp;&nbsp; You may only use our website for your own personal and business purposes, and you must not use our website for any other purposes.<br />
+2.4&nbsp;&nbsp;&nbsp;&nbsp; Except as expressly permitted by this notice, you must not edit or otherwise modify any material on our website.<br />
+2.5&nbsp;&nbsp;&nbsp;&nbsp; Unless you own or control the relevant rights in the material, you must not:<br />
+(a)&nbsp;&nbsp;&nbsp;&nbsp; republish material from our website (including republication on another website);<br />
+(b)&nbsp;&nbsp;&nbsp;&nbsp; sell, rent or sub-license material from our website;<br />
+(c)&nbsp;&nbsp;&nbsp;&nbsp; show any material from our website in public;<br />
+(d)&nbsp;&nbsp;&nbsp;&nbsp; exploit material from our website for a commercial purpose; or<br />
+(e)&nbsp;&nbsp;&nbsp;&nbsp; redistribute material from our website, save to the extent expressly permitted by this notice.<br />
+<br />
+<strong>3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Acceptable Use</strong><br />
+3.1&nbsp;&nbsp;&nbsp;&nbsp; You must not:<br />
+(a)&nbsp;&nbsp;&nbsp;&nbsp; use our website in any way or take any action that causes, or may cause, damage to the website or impairment of the performance, availability or accessibility of the website;<br />
+(b)&nbsp;&nbsp;&nbsp;&nbsp; use our website in any way that is unlawful, illegal, fraudulent or harmful, or in connection with any unlawful, illegal, fraudulent or harmful purpose or activity;<br />
+(c)&nbsp;&nbsp;&nbsp;&nbsp; use our website to copy, store, host, transmit, send, use, publish or distribute any material which consists of (or is linked to) any spyware, computer virus, Trojan horse, worm, keystroke logger, rootkit or other malicious computer software; or<br />
+(d)&nbsp;&nbsp;&nbsp;&nbsp; conduct any systematic or automated data collection activities (including without limitation scraping, data mining, data extraction and data harvesting) on or in relation to our website without our express written consent.<br />
+<br />
+<strong>4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Report Abuse</strong><br />
+4.1&nbsp;&nbsp;&nbsp;&nbsp; If you learn of any unlawful material or activity on our website, or any material or activity that breaches this notice, please l &nbsp; let us know.<br />
+4.2&nbsp;&nbsp;&nbsp;&nbsp; You can let us know by email or by using our abuse reporting form.<br />
+<br />
+<strong>5.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Enforcement of Copyright</strong><br />
+5.1&nbsp;&nbsp;&nbsp;&nbsp; We take the protection of our copyright very seriously.<br />
+5.2&nbsp;&nbsp;&nbsp;&nbsp; If we discover that you have used our copyright materials in contravention of the licence set out in this notice, we may bring legal proceedings against you, seeking monetary damages and/or an injunction to stop you using those materials. You could also be ordered to pay legal costs.<br />
+<br />
+<strong>6.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Permissions</strong><br />
+6.1&nbsp;&nbsp;&nbsp;&nbsp; You may request permission to use the copyright materials on our website by writing to us by email or post, using the contact details published on the website.					</div>
+				</dd>
+							<dt>Privacy Policy</dt>
+				<dd>
+					<div class="accordin_contain">
+						<strong>1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Introduction</strong><br />
+1.1&nbsp;&nbsp;&nbsp;&nbsp; We are committed to safeguarding the privacy of our website visitors; in this policy we explain how we will treat your personal information.<br />
+1.2&nbsp;&nbsp;&nbsp;&nbsp; We will ask you to consent to our use of cookies in accordance with the terms of this policy when you first visit our website. / By using our website and agreeing to this policy, you consent to our use of cookies in accordance with the terms of this policy.<br />
+<br />
+<strong>2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Collecting Personal Information</strong><br />
+2.1&nbsp;&nbsp;&nbsp;&nbsp; We may collect, store and use the following kinds of personal information:<br />
+(a)&nbsp;&nbsp;&nbsp;&nbsp; information about your computer and about your visits to and use of this website (including your IP address, geographical location, browser type and version, operating system, referral source, length of visit, page views and website navigation paths);<br />
+(b)&nbsp;&nbsp;&nbsp;&nbsp; information that you provide to us when registering with our website (including your name and email address);<br />
+(c)&nbsp;&nbsp;&nbsp;&nbsp; information that you provide when completing your profile on our website (including your first name, last name, birthdate, e-mail, sex);<br />
+(d)&nbsp;&nbsp;&nbsp;&nbsp; information that you provide to us for the purpose of subscribing to our email notifications and/or newsletters (including your name and email address);<br />
+(e)&nbsp;&nbsp;&nbsp;&nbsp; information that you provide to us when using the services on our website, or that is generated in the course of the use of those services (including the timing, frequency and pattern of service use;<br />
+(f)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; information relating to any purchases you make of our goods / services / goods and/or services or any other transactions that you enter into through our website (including your name, address, telephone number, email address and payment details;<br />
+(g)&nbsp;&nbsp;&nbsp;&nbsp; information that you post to our website for publication on the internet (including your location, name, age, sex, pictures and videos, phone number, e-mail, places visited, travel itinerary, groups you are part of with other users, travel interests and the content of your posts);<br />
+(h)&nbsp;&nbsp;&nbsp;&nbsp; information contained in or relating to any communications that you send to us or send through our website (including the communication content and meta data associated with the communication);<br />
+(i)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; any other personal information that you choose to send to us;<br />
+2.2&nbsp;&nbsp;&nbsp;&nbsp; Before you disclose to us the personal information of another person, you must obtain that person&#39;s consent to both the disclosure and the processing of that personal information in accordance with this policy.<br />
+<br />
+<strong>3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Using Your Personal Information</strong><br />
+3.1&nbsp;&nbsp;&nbsp;&nbsp; Personal information submitted to us through our website will be used for the purposes specified in this policy or on the relevant pages of the website.<br />
+3.2&nbsp;&nbsp;&nbsp;&nbsp; We may use your personal information to:
+<ol style="list-style-type:lower-alpha;">
+	<li>administer our website and business;</li>
+	<li>personalise our website for you;</li>
+	<li>enable your use of the services available on our website;</li>
+	<li>supply to you services purchased through our website;</li>
+	<li>send statements, invoices and payment reminders to you, and collect payments from you;</li>
+	<li>send you non-marketing commercial communications;</li>
+	<li>send you email notifications that you have specifically requested;</li>
+	<li>send you our email newsletter, if you have requested it (you can inform us at any time if you no longer require the newsletter);</li>
+	<li>send you marketing communications relating to our business or the businesses of carefully-selected third parties which we think may be of interest to you, by post or, where you have specifically agreed to this, by email or similar technology (you can inform us at any time if you no longer require marketing communications);</li>
+	<li>provide third parties with statistical information about our users (but those third parties will not be able to identify any individual user from that information);</li>
+	<li>deal with enquiries and complaints made by or about you relating to our website;</li>
+	<li>keep our website secure and prevent fraud;</li>
+	<li>verify compliance with the terms and conditions governing the use of our website (including monitoring private messages sent through our website private messaging service);</li>
+	<li>market research purposes and;</li>
+	<li>create online community of new and old relationship as well as suggest groups with similar interest.</li>
+</ol>
+3.3&nbsp;&nbsp;&nbsp;&nbsp; If you submit personal information for publication on our website, we will publish and otherwise use that information in accordance with the licence you grant to us.<br />
+3.4&nbsp;&nbsp;&nbsp;&nbsp; We will not, without your express consent, supply your personal information to any third party for the purpose of their or any other third party&#39;s direct marketing.<br />
+3.5&nbsp;&nbsp;&nbsp;&nbsp; All our website financial transactions are handled through our payment services provider, Stripe. You can review the provider&#39;s privacy policy at <a href="https://stripe.com/us/terms">https://stripe.com/us/terms</a>. We will share information with our payment services provider only to the extent necessary for the purposes of processing payments you make via our website, refunding such payments and dealing with complaints and queries relating to such payments and refunds.<br />
+<br />
+<strong>4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Disclosing Personal Information</strong><br />
+4.1&nbsp;&nbsp;&nbsp;&nbsp; We may disclose your personal information to any of our employees, officers, insurers, professional advisers, agents, suppliers or subcontractors insofar as reasonably necessary for the purposes set out in this policy.<br />
+4.2&nbsp;&nbsp;&nbsp;&nbsp; We may disclose your personal information:<br />
+(a)&nbsp;&nbsp;&nbsp;&nbsp; to the extent that we are required to do so by law;<br />
+(b)&nbsp;&nbsp;&nbsp;&nbsp; in connection with any ongoing or prospective legal proceedings;<br />
+(c)&nbsp;&nbsp;&nbsp;&nbsp; in order to establish, exercise or defend our legal rights (including providing information to others for the purposes of fraud prevention and reducing credit risk);<br />
+(d)&nbsp;&nbsp;&nbsp;&nbsp; to the purchaser (or prospective purchaser) of any business or asset that we are (or are contemplating) selling; and<br />
+(e)&nbsp;&nbsp;&nbsp;&nbsp; to any person who we reasonably believe may apply to a court or other competent authority for disclosure of that personal information where, in our reasonable opinion, such court or authority would be reasonably likely to order disclosure of that personal information.<br />
+4.4&nbsp;&nbsp;&nbsp;&nbsp; Except as provided in this policy, we will not provide your personal information to third parties.<br />
+<br />
+<strong>5.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; International Data Transfers</strong><br />
+5.1&nbsp;&nbsp;&nbsp;&nbsp; Information that we collect may be stored and processed in and transferred between any of the countries in which we operate in order to enable us to use the information in accordance with this policy.<br />
+5.2&nbsp;&nbsp;&nbsp;&nbsp; Personal information that you publish on our website or submit for publication on our website may be available, via the internet, around the world. We cannot prevent the use or misuse of such information by others.<br />
+5.3&nbsp;&nbsp;&nbsp;&nbsp; You expressly agree to the transfers of personal information described in this Section 5.<br />
+<br />
+<strong>6.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Retaining Personal Information</strong><br />
+6.1&nbsp;&nbsp;&nbsp;&nbsp; This Section 6 sets out our data retention policies and procedure, which are designed to help ensure that we comply with our legal obligations in relation to the retention and deletion of personal information.<br />
+6.2&nbsp;&nbsp;&nbsp;&nbsp; Personal information that we process for any purpose or purposes shall not be kept for longer than is necessary for that purpose or those purposes.<br />
+6.3&nbsp;&nbsp;&nbsp;&nbsp; Notwithstanding the other provisions of this Section 6, we will retain documents (including electronic documents) containing personal data:<br />
+(a)&nbsp;&nbsp;&nbsp;&nbsp; to the extent that we are required to do so by law;<br />
+(b)&nbsp;&nbsp;&nbsp;&nbsp; if we believe that the documents may be relevant to any ongoing or prospective legal proceedings; and<br />
+(c)&nbsp;&nbsp;&nbsp;&nbsp; in order to establish, exercise or defend our legal rights (including providing information to others for the purposes of fraud prevention and reducing credit risk).<br />
+<br />
+<strong>7.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Security Of Your Personal Information</strong><br />
+7.1&nbsp;&nbsp;&nbsp;&nbsp; We will take reasonable technical and organisational precautions to prevent the loss, misuse or alteration of your personal information.<br />
+7.2&nbsp;&nbsp;&nbsp;&nbsp; We will store all the personal information you provide on our secure (password- and firewall-protected) servers.<br />
+7.3&nbsp;&nbsp;&nbsp;&nbsp; You acknowledge that the transmission of information over the internet is inherently insecure, and we cannot guarantee the security of data sent over the internet.<br />
+7.4&nbsp;&nbsp;&nbsp;&nbsp; You are responsible for keeping the password you use for accessing our website confidential; we will not ask you for your password (except when you log in to our website).<br />
+<br />
+<strong>8.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Amendments</strong><br />
+8.1&nbsp;&nbsp;&nbsp;&nbsp; We may update this policy from time to time by publishing a new version on our website.<br />
+8.2&nbsp;&nbsp;&nbsp;&nbsp; You should check this page occasionally to ensure you are happy with any changes to this policy.<br />
+8.3&nbsp;&nbsp;&nbsp;&nbsp; We may notify you of changes to this policy by email.<br />
+<br />
+<strong>9.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Your Rights</strong><br />
+9.1&nbsp;&nbsp;&nbsp;&nbsp; You may instruct us to provide you with any personal information we hold about you; provision of such information will be subject to:<br />
+&nbsp;(a)&nbsp;&nbsp;&nbsp; the supply of appropriate evidence of your identity (in addition to previously requested information, a form of government ID will be required).<br />
+9.2&nbsp;&nbsp;&nbsp;&nbsp; We may withhold personal information that you request to the extent permitted by law.<br />
+9.3&nbsp;&nbsp;&nbsp;&nbsp; You may instruct us at any time not to process your personal information for marketing purposes.<br />
+9.4&nbsp;&nbsp;&nbsp;&nbsp; In practice, you will usually either expressly agree in advance to our use of your personal information for marketing purposes, or we will provide you with an opportunity to opt out of the use of your personal information for marketing purposes.<br />
+<br />
+<strong>10.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Third Party Websites</strong><br />
+10.1&nbsp;&nbsp; Our website includes hyperlinks to, and details of, third party websites.<br />
+10.2&nbsp;&nbsp; We have no control over, and are not responsible for, the privacy policies and practices of third parties.<br />
+<br />
+<strong>11.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Updating Information</strong><br />
+11.1&nbsp;&nbsp; Please let us know if the personal information that we hold about you needs to be corrected or updated.<br />
+<br />
+<strong>12.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cookies</strong><br />
+12.1&nbsp;&nbsp; Our website uses cookies.<br />
+12.2&nbsp;&nbsp; A cookie is a file containing an identifier (a string of letters and numbers) that is sent by a web server to a web browser and is stored by the browser. The identifier is then sent back to the server each time the browser requests a page from the server.<br />
+12.3&nbsp;&nbsp; Cookies may be either &quot;persistent&quot; cookies or &quot;session&quot; cookies: a persistent cookie will be stored by a web browser and will remain valid until its set expiry date, unless deleted by the user before the expiry date; a session cookie, on the other hand, will expire at the end of the user session, when the web browser is closed.<br />
+12.4&nbsp;&nbsp; Cookies do not typically contain any information that personally identifies a user, but personal information that we store about you may be linked to the information stored in and obtained from cookies.<br />
+12.5&nbsp;&nbsp; We use both session and persistent cookies on our website.<br />
+12.6&nbsp;&nbsp; The names of the cookies that we use on our website, and the purposes for which they are used, are set out below:<br />
+(a)&nbsp;&nbsp;&nbsp;&nbsp; we use both session and persistent cookies on our website to recognise a computer when a user visits the website / track users as they navigate the website / enable the use of a shopping cart on the website / improve the website&#39;s usability / analyse the use of the website / administer the website / prevent fraud and improve the security of the website / personalise the website for each user / target advertisements which may be of particular interest to specific users;<br />
+(b)&nbsp;&nbsp;&nbsp;&nbsp; we use jumplyfe cookie to store website settings and login status upon arrival to our website.<br />
+12.7&nbsp;&nbsp; Most browsers allow you to refuse to accept cookies; for example:<br />
+(a)&nbsp;&nbsp;&nbsp;&nbsp; in Internet Explorer (version 10) you can block cookies using the cookie handling override settings available by clicking &quot;Tools&quot;, &quot;Internet Options&quot;, &quot;Privacy&quot; and then &quot;Advanced&quot;;<br />
+(b)&nbsp;&nbsp;&nbsp;&nbsp; in Firefox (version 24) you can block all cookies by clicking &quot;Tools&quot;, &quot;Options&quot;, &quot;Privacy&quot;, selecting &quot;Use custom settings for history&quot; from the drop-down menu, and unticking &quot;Accept cookies from sites&quot;; and<br />
+(c)&nbsp;&nbsp;&nbsp;&nbsp; in Chrome (version 29), you can block all cookies by accessing the &quot;Customise and control&quot; menu, and clicking &quot;Settings&quot;, &quot;Show advanced settings&quot; and &quot;Content settings&quot;, and then selecting &quot;Block sites from setting any data&quot; under the &quot;Cookies&quot; heading.<br />
+12.8&nbsp;&nbsp; Blocking all cookies will have a negative impact upon the usability of many websites.<br />
+12.9&nbsp;&nbsp; If you block cookies, you will not be able to use all the features on our website.<br />
+12.10 You can delete cookies already stored on your computer; for example:<br />
+(a)&nbsp;&nbsp;&nbsp;&nbsp; in Internet Explorer (version 10), you must manually delete cookie files (you can find instructions for doing so at http://support.microsoft.com/kb/278835);<br />
+(b)&nbsp;&nbsp;&nbsp;&nbsp; in Firefox (version 24), you can delete cookies by clicking &quot;Tools&quot;, &quot;Options&quot; and &quot;Privacy&quot;, then selecting &quot;Use custom settings for history&quot;, clicking &quot;Show Cookies&quot;, and then clicking &quot;Remove All Cookies&quot;; and<br />
+(c)&nbsp;&nbsp;&nbsp;&nbsp; in Chrome (version 29), you can delete all cookies by accessing the &quot;Customise and control&quot; menu, and clicking &quot;Settings&quot;, &quot;Show advanced settings&quot; and &quot;Clear browsing data&quot;, and then selecting &quot;Delete cookies and other site and plug-in data&quot; before clicking &quot;Clear browsing data&quot;.<br />
+12.11 Deleting cookies will have a negative impact on the usability of many websites.					</div>
+				</dd>
+							<dt>Anti-Spam Policy</dt>
+				<dd>
+					<div class="accordin_contain">
+						<strong>1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Introduction</strong><br />
+1.1&nbsp;&nbsp;&nbsp;&nbsp; In the context of electronic messaging, &quot;spam&quot; means unsolicited, bulk or indiscriminate messages, typically sent for a commercial purpose.<br />
+1.2&nbsp;&nbsp;&nbsp;&nbsp; We have a zero-tolerance spam policy.<br />
+<br />
+<strong>2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Spam Filtering</strong><br />
+2.1&nbsp;&nbsp;&nbsp;&nbsp; Our messaging systems automatically scan all incoming email and other messages and filter out messages that appear to be spam.<br />
+2.2&nbsp;&nbsp;&nbsp;&nbsp; We may also report incoming email as spam. This can result in IP addresses and domain names being blacklisted.<br />
+<br />
+<strong>3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Spam Filtering Issues</strong><br />
+3.1&nbsp;&nbsp;&nbsp;&nbsp; No message filtering system is 100% accurate, and from time to time legitimate messages will be filtered out by our systems.<br />
+3.2&nbsp;&nbsp;&nbsp;&nbsp; If you believe that a legitimate message you have sent has been filtered out by our systems, please advise the message recipient by another means.<br />
+3.3&nbsp;&nbsp;&nbsp;&nbsp; You can reduce the risk of a message being caught by the spam filters by:<br />
+(a)&nbsp;&nbsp;&nbsp;&nbsp; sending the message in plain text (instead of, or in addition to, HTML);<br />
+(b)&nbsp;&nbsp;&nbsp;&nbsp; removing any message attachments;<br />
+(c)&nbsp;&nbsp;&nbsp;&nbsp; avoiding the terminology and text styling typically used by spammers; and/or<br />
+(d)&nbsp;&nbsp;&nbsp;&nbsp; ensuring that your messages are scanned for malware before dispatch.<br />
+<br />
+<strong>4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; User Spam</strong><br />
+4.1&nbsp;&nbsp;&nbsp;&nbsp; We provide a facility that enables users to send email messages / private messages / post comments to a live feed / live chats to others.<br />
+4.2&nbsp;&nbsp;&nbsp;&nbsp; Users must not use our messaging facility or any of our other services to store, copy, send, relay or distribute spam.<br />
+4.3&nbsp;&nbsp;&nbsp;&nbsp; Full provisions concerning the use of our messaging facility are set out in our website terms and conditions of use.<br />
+<br />
+<strong>5.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Receipt of Unwanted Messages From Us</strong><br />
+5.1&nbsp;&nbsp;&nbsp;&nbsp; In the unlikely event that you receive any message from us or sent using our systems that may be considered to be spam, please contact us using the details below and the matter will be investigated.<br />
+<br />
+<strong>6.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Variation</strong><br />
+6.1&nbsp;&nbsp;&nbsp;&nbsp; We may amend this policy at any time by publishing a new version on our website.&nbsp;					</div>
+				</dd>
+							<dt>Cookies Policy</dt>
+				<dd>
+					<div class="accordin_contain">
+						<strong>1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Introduction</strong><br />
+1.1&nbsp;&nbsp;&nbsp;&nbsp; Our website uses cookies.<br />
+1.2&nbsp;&nbsp;&nbsp;&nbsp; We will ask you to consent to our use of cookies in accordance with the terms of this policy when you first visit our website. / By using our website and agreeing to this policy, you consent to our use of cookies in accordance with the terms of this policy.<br />
+<br />
+<strong>2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; About Cookies</strong><br />
+2.1&nbsp;&nbsp;&nbsp;&nbsp; A cookie is a file containing an identifier (a string of letters and numbers) that is sent by a web server to a web browser and is stored by the browser. The identifier is then sent back to the server each time the browser requests a page from the server.<br />
+2.2&nbsp;&nbsp;&nbsp;&nbsp; Cookies may be either &quot;persistent&quot; cookies or &quot;session&quot; cookies: a persistent cookie will be stored by a web browser and will remain valid until its set expiry date, unless deleted by the user before the expiry date; a session cookie, on the other hand, will expire at the end of the user session, when the web browser is closed.<br />
+2.3&nbsp;&nbsp;&nbsp;&nbsp; Cookies do not typically contain any information that personally identifies a user, but personal information that we store about you may be linked to the information stored in and obtained from cookies.<br />
+2.4&nbsp;&nbsp;&nbsp;&nbsp; Cookies can be used by web servers to identity and track users as they navigate different pages on a website and identify users returning to a website.<br />
+<br />
+<strong>3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Our Cookies</strong><br />
+3.1&nbsp;&nbsp;&nbsp;&nbsp; We use both session and persistent cookies on our website.<br />
+3.2&nbsp;&nbsp;&nbsp;&nbsp; The names of the cookies that we use on our website, and the purposes for which they are used, are set out below:<br />
+(a)&nbsp;&nbsp;&nbsp;&nbsp; we use both session and persistent cookies on our website to recognise a computer when a user visits the website / track users as they navigate the website / enable the use of a shopping cart on the website / improve the website&#39;s usability / analyse the use of the website / administer the website / prevent fraud and improve the security of the website / personalise the website for each user / target advertisements which may be of particular interest to specific users;<br />
+(b)&nbsp;&nbsp;&nbsp;&nbsp; we use jumplyfe cookie to store website settings and login status upon arrival to our website.<br />
+<br />
+<strong>4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Analytics Cookies</strong><br />
+4.1&nbsp;&nbsp;&nbsp;&nbsp; We use Google Analytics to analyse the use of our website.<br />
+4.2&nbsp;&nbsp;&nbsp;&nbsp; Our analytics service provider generates statistical and other information about website use by means of cookies.<br />
+4.3&nbsp;&nbsp;&nbsp;&nbsp; The analytics cookies used by our website have the following names: _utma, _utmb, _utmc and _utmz<br />
+4.4&nbsp;&nbsp;&nbsp;&nbsp; The information generated relating to our website is used to create reports about the use of our website.<br />
+4.5&nbsp;&nbsp;&nbsp;&nbsp; Our analytics service provider&#39;s privacy policy is available at: http://www.google.com/policies/privacy/.<br />
+<br />
+<strong>5.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Blocking Cookies</strong><br />
+5.1&nbsp;&nbsp;&nbsp;&nbsp; Most browsers allow you to refuse to accept cookies; for example:<br />
+(a)&nbsp;&nbsp;&nbsp;&nbsp; in Internet Explorer (version 10) you can block cookies using the cookie handling override settings available by clicking &quot;Tools&quot;, &quot;Internet Options&quot;, &quot;Privacy&quot; and then &quot;Advanced&quot;;<br />
+(b)&nbsp;&nbsp;&nbsp;&nbsp; in Firefox (version 24) you can block all cookies by clicking &quot;Tools&quot;, &quot;Options&quot;, &quot;Privacy&quot;, selecting &quot;Use custom settings for history&quot; from the drop-down menu, and unticking &quot;Accept cookies from sites&quot;; and<br />
+(c)&nbsp;&nbsp;&nbsp;&nbsp; in Chrome (version 29), you can block all cookies by accessing the &quot;Customise and control&quot; menu, and clicking &quot;Settings&quot;, &quot;Show advanced settings&quot; and &quot;Content settings&quot;, and then selecting &quot;Block sites from setting any data&quot; under the &quot;Cookies&quot; heading.<br />
+5.2&nbsp;&nbsp;&nbsp;&nbsp; Blocking all cookies will have a negative impact upon the usability of many websites.<br />
+<br />
+<strong>6.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Deleting Cookies</strong><br />
+6.1&nbsp;&nbsp;&nbsp;&nbsp; You can delete cookies already stored on your computer; for example:<br />
+(a)&nbsp;&nbsp;&nbsp;&nbsp; in Internet Explorer (version 10), you must manually delete cookie files (you can find instructions for doing so at http://support.microsoft.com/kb/278835);<br />
+(b)&nbsp;&nbsp;&nbsp;&nbsp; in Firefox (version 24), you can delete cookies by clicking &quot;Tools&quot;, &quot;Options&quot; and &quot;Privacy&quot;, then selecting &quot;Use custom settings for history&quot;, clicking &quot;Show Cookies&quot;, and then clicking &quot;Remove All Cookies&quot;; and<br />
+(c)&nbsp;&nbsp;&nbsp;&nbsp; in Chrome (version 29), you can delete all cookies by accessing the &quot;Customise and control&quot; menu, and clicking &quot;Settings&quot;, &quot;Show advanced settings&quot; and &quot;Clear browsing data&quot;, and then selecting &quot;Delete cookies and other site and plug-in data&quot; before clicking &quot;Clear browsing data&quot;.<br />
+6.2&nbsp;&nbsp;&nbsp;&nbsp; Deleting cookies will have a negative impact on the usability of many websites.					</div>
+				</dd>
+							<dt>Linking Policy</dt>
+				<dd>
+					<div class="accordin_contain">
+						<strong>1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Introduction</strong><br />
+1.1&nbsp;&nbsp;&nbsp;&nbsp; We welcome links to our website made in accordance with the terms of this policy.<br />
+1.2&nbsp;&nbsp;&nbsp;&nbsp; This policy is intended to assist you when linking to our website. / By using our website you agree to be bound by the provisions of this policy.<br />
+<br />
+<strong>2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Links To Our Website</strong><br />
+2.1&nbsp;&nbsp;&nbsp;&nbsp; Links pointing to our website should not be misleading.<br />
+2.2&nbsp;&nbsp;&nbsp;&nbsp; Appropriate link text should always be used in links pointing to our website.<br />
+2.3&nbsp;&nbsp;&nbsp;&nbsp; From time to time we may update the URL structure of our website and, unless we agree in writing otherwise, all links should point to jumplyfe.com.<br />
+2.4&nbsp;&nbsp;&nbsp;&nbsp; You must not use our logo to link to our website (or otherwise) without our express written permission.<br />
+2.5&nbsp;&nbsp;&nbsp;&nbsp; You must not link to our website using any inline linking technique.<br />
+3.6&nbsp;&nbsp;&nbsp;&nbsp; You must not frame the content of our website or use any similar technology in relation to the content of the website.<br />
+<br />
+<strong>3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Links From Our Website</strong><br />
+3.1&nbsp;&nbsp;&nbsp;&nbsp; Our website includes hyperlinks to other websites owned and operated by third parties; such hyperlinks are not recommendations.<br />
+3.2&nbsp;&nbsp;&nbsp;&nbsp; We have no control over the contents of third party websites, and we accept no responsibility for them or for any loss or damage that may arise from your use of them.<br />
+<br />
+<strong>4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Removal of Links</strong><br />
+4.1&nbsp;&nbsp;&nbsp;&nbsp; You agree that, should we request the deletion of a link to our website that is within your control, you will delete the link promptly.<br />
+4.2&nbsp;&nbsp;&nbsp;&nbsp; If you would like us to remove a link to your website that is included on this website, please contact us using the contact details below. Unless you have a legal right to demand removal, such removal will be at our discretion.<br />
+<br />
+<strong>5.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Variation</strong><br />
+5.1&nbsp;&nbsp;&nbsp;&nbsp; We may amend this policy at any time by publishing a new version on our website.&nbsp;<br />
+&nbsp;					</div>
+				</dd>
+							
+    </dl>
+
+ </div>
+
+</div>		
+
+<div class="footer">
+  <div class="btn_start">
+  <!--<a href="#"><span>Start  Your</span>  Today</a>-->
+    <a href="../login.php" class=""><span>Start  Your</span> <img src="../img/jump.png" alt="" /> Today</a>  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-sm-3 col-xs-6"> 
+          <ul class="footer_menu">
+            <li><a href="../pages/about-us.html">about</a></li>
+           <!-- <li><a href="/welcomes/press">press</a></li>-->
+            <li><a href="jobs.html">jobs</a></li>
+          </ul> 
+
+      </div>
+        <div class="col-md-3 col-sm-3 col-xs-6 text-center">
+          <!--<ul class="footer_menu">
+			<li><a href="/welcomes/hospitality ">HOSPITALITY</a></li> 
+            <li><a href="#">RESPONSIVE HOUSING</a></li>
+            <li><a href="/welcomes/home_safety">HOME SAFETY</a></li>
+            <li><a href="/pages/why-host">WHY HOST?</a></li>
+          </ul> -->
+          			<a href="../index.php" class="ftr-logo"><img src="../img/logo_icon.png" class="img-responsive" alt="" /></a><div class="clearfix"></div>
+			<a href="javascript:void(0)" onclick="window.open('https://www.sitelock.com/verify.php?site=www.jumplyfe.com','SiteLock','width=600,height=600,left=160,top=170');" ><img alt="SiteLock" title="SiteLock" class="site_security_image" src="http://shield.sitelock.com/shield/www.jumplyfe.com"/></a> 
+		</div>
+			
+          <div class="col-md-3 col-sm-3  col-xs-12">
+           <div class="join">
+            <p>join us on</p>
+            <ul class="social_icon">
+              <li><a href="https://www.facebook.com/jumplyfe" target="_blank"><i class="fa fa-facebook"></i></a></li>
+              <li><a href="https://www.twitter.com/jumplyfe" target="_blank"><i class="fa fa-twitter"></i></a></li>
+              <li><a href="https://www.pinterest.com/jumplyfe" target="_blank"><i class="fa fa-pinterest-p"></i></a></li>
+              <li><a href="https://www.instagram.com/jumplyfe" target="_blank"><i class="fa fa-instagram"></i></a></li>
+            </ul>
+          </div> 
+      </div>
+       <div class="col-md-3 col-sm-3  col-xs-12">
+           <div class="download">
+            <p>download our app</p>
+             <div class="download_img">
+              <a href="#"> <img src="../img/app.png" class="img-responsive" alt="" /> </a>
+              <a href="#"> <img src="../img/google.png" class="img-responsive" alt="" /></a>
+            </div> 
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="copyright">
+	<div class="container">
+		<a href="help.html">HELP</a> | <a href="faqs.html">FAQ</a> | <a href="policies.html">POLICIES</a> | <a href="../pages/terms-and-privacy.html">TERMS &amp; PRIVACY.</a> | <a href="contact_us.html">CONTACT US</a> <span>Copyright© 2015 JumpLyfe.com All Rights Reserved.</span>
+	</div>
+</div>
+<script>
+function openLoginPopup()
+{
+	$("#forgotpasswordPopup").modal('hide');
+	
+	$("#loginPopup").modal('show');
+	$('#loginPopup').on('shown.bs.modal', function() {
+		$("#loginPopup .email").focus();
+	})
+	
+}
+
+
+function openPreRegisterPopUp()
+{
+	var is_beta_site = 'Yes';
+	if(is_beta_site == 'Yes'){
+		$("#inviteFriendRegisterPopup").modal('show');
+	}
+	else
+	{
+		openRegisterPopup();
+	}
+}
+
+function openRegisterPopup()
+{
+	$("#registerPopup").modal('show');
+}
+function openForgotPasswordPopup()
+{
+	$("#loginPopup").modal('hide');
+	$("#forgotpasswordPopup").modal('show');
+}
+
+function callBackAfterInviteFriendReg(){
+	$("#inviteFriendRegisterPopup").modal('hide');
+	$('#registerPopup').find('.extraButton').hide();
+	$("#registerPopup").modal('show');
+	
+}
+
+var twitter_id = '';
+	var twitter_firstName = '';
+	var twitter_lastName = '';
+$(document).ready(function(){
+	
+	if(twitter_id != ''){
+		$('#registerPopup').find('.twitter_fname').val(twitter_firstName);
+		$('#registerPopup').find('.twitter_lname').val(twitter_lastName);
+		$('#registerPopup').find('.twitter_ids').val(twitter_id);
+		$('#registerPopup').find('.extraButton').hide();
+		$("#registerPopup").modal('show');
+	}
+});
+</script>
+
+<div class="modal fade" id="loginPopup" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+		<div class="modal-content">
+			<div class="text-center modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<img src="../img/popup_logo.png" alt="" />				<h4 class="modal-title">Sign In</h4>
+            </div>
+			<form action="http://www.jumplyfe.com/login" class="ajax_form" id="UsersPoliciesForm" method="post" accept-charset="utf-8"><div style="display:none;"><input type="hidden" name="_method" value="POST"/></div>			<div class="alert ajax_alert alert-danger display-hide">
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+					<i class="fa fa-close"></i>
+				</button>
+				<span class="ajax_message"></span>
+			</div>
+			<div class="modal-body">
+			<div class="form-group">
+				<div class="input-group">
+					<div class="input email"><input name="data[User][email]" class="form-control email" placeholder="Email" required id="User_Email" type="email"/></div>					
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-group">
+					<div class="input password"><input name="data[User][password]" class="form-control" placeholder="Password" required type="password" id="UserPassword"/></div>				</div>
+			</div>
+				<span><a href="JavaScript:void(0)" onclick="openForgotPasswordPopup()">Forgot Password</a></span>
+			</div>
+
+			<div class="modal-footer">
+				<button class="btn btn-primary" type="submit">SIGN IN</button>			</div>
+			</form>		</div>
+	</div>
+</div>
+<div class="modal fade signup-modal" id="registerPopup" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="text-center modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<img src="../img/popup_logo.png" alt="" />				<h4 class="modal-title">Be a Jumper</h4>
+			</div>
+			<form action="http://www.jumplyfe.com/registers" class="ajax_form" id="RegisterPoliciesForm" method="post" accept-charset="utf-8"><div style="display:none;"><input type="hidden" name="_method" value="POST"/></div>			<div class="alert ajax_alert alert-danger display-hide">
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+					<i class="fa fa-close"></i>
+				</button>
+				<span class="ajax_message"></span>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<div class="input-group">
+						<div class="input text required"><input name="data[Register][firstname]" class="form-control twitter_fname" placeholder="First Name" required value="" maxlength="255" type="text" id="RegisterFirstname"/></div>					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-group">
+						<div class="input text required"><input name="data[Register][lastname]" class="form-control twitter_lname" placeholder="Last Name" required value="" maxlength="255" type="text" id="RegisterLastname"/></div>					</div>
+				</div>
+				<input name="data[Register][twitter_id]" class="twitter_ids" value="" type="hidden" id="RegisterTwitterId"/>				<div class="form-group">
+					<div class="input-group">
+						<div class="input email required"><input name="data[Register][email]" class="form-control" placeholder="Email" required type="email" id="RegisterEmail"/></div>					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-group">
+						<div class="input password required"><input name="data[Register][password]" class="form-control" placeholder="Password" required type="password" id="RegisterPassword"/></div>					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-group">
+						<div class="input password required"><input name="data[Register][confirm_password]" class="form-control" placeholder="Confirm Password" required type="password" id="RegisterConfirmPassword"/></div>					</div>
+				</div>
+				<div class="checkbox">
+					<label	>
+						<div class="input checkbox required"><input type="hidden" name="data[Register][terms]" id="RegisterTerms_" value="0"/><input type="checkbox" name="data[Register][terms]"  value="1" required id="RegisterTerms"/></div> I agree to accept the terms and conditions
+					</label>
+				</div>
+				<div class="register_page">
+					<button class="btn btn-primary" type="submit">REGISTER</button><br>
+					<span class="sign extraButton">- OR - <br>Sign up with</span>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="../social_endpoint630b.html" class="btn btn-default btn-facebook btn-block extraButton"><i class='fa fa-facebook'></i>Login with Facebook</a><a href="https://api.twitter.com/oauth/authenticate?oauth_token=wcdSkAAAAAAAgpuHAAABT9wql7E" class="btn btn-default btn-twitter btn-block extraButton"><i class='fa fa-twitter'></i>Login with Twitter</a><a href="https://accounts.google.com/o/oauth2/auth?client_id=199655855456-m4eq3cn97t79kn9pogdmj0sishg9giv9.apps.googleusercontent.com&amp;redirect_uri=http%3A%2F%2Fwww.jumplyfe.com%2Fsocial_endpoint%3Fhauth.done%3DGoogle&amp;response_type=code&amp;scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.google.com%2Fm8%2Ffeeds%2F&amp;access_type=offline" class="btn btn-default btn-instagram btn-block extraButton"><i class='fa fa-google'></i>Login with Google+</a>			</div>
+			</form>		</div>
+	</div>
+</div>
+<div class="modal fade" id="forgotpasswordPopup" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="text-center modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<img src="../img/popup_logo.png" alt="" />				<h4 class="modal-title">Forgot Password</h4>
+			</div>
+			<form action="http://www.jumplyfe.com/users/forgot_password" class="ajax_form" id="UserPoliciesForm" method="post" accept-charset="utf-8"><div style="display:none;"><input type="hidden" name="_method" value="POST"/></div>			<div class="alert ajax_alert alert-danger display-hide">
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+					<i class="fa fa-close"></i>
+				</button>
+				<span class="ajax_message"></span>
+			</div>
+			<div class="modal-body">
+				<div class="input-group">
+					<div class="input text"><input name="data[User][email]" class="form-control" placeholder="Email" maxlength="255" type="text" id="UserEmail"/></div>				</div><br>
+				<span><a href="JavaScript:void(0)" onclick="openLoginPopup()">Login</a></span>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-primary" type="submit">Submit</button>			</div>
+			</form>		</div>
+	</div>
+</div>
+<div class="modal fade" id="inviteFriendRegisterPopup" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="text-center modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<img src="../img/popup_logo.png" alt="" />				<h4 class="modal-title">Please Enter Your Email</h4>
+			</div>
+			<form action="http://www.jumplyfe.com/users/invite_friend_registration" class="ajax_form" id="BetaRegistrationInvitationPoliciesForm" method="post" accept-charset="utf-8"><div style="display:none;"><input type="hidden" name="_method" value="POST"/></div>			<div class="alert ajax_alert alert-danger display-hide">
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+					<i class="fa fa-close"></i>
+				</button>
+				<span class="ajax_message"></span>
+			</div>
+			<div class="modal-body">
+				<div class="input-group">
+					<div class="input text"><input name="data[BetaRegistrationInvitation][email]" class="form-control" placeholder="Email" type="text" id="BetaRegistrationInvitationEmail"/></div>				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-primary" type="submit">Submit</button>			</div>
+			</form>		</div>
+	</div>
+</div>
+<script>
+$('#registerPopup').on('hidden.bs.modal', function(){
+    $(this).find('form')[0].reset();
+});
+
+$('#loginPopup').on('hidden.bs.modal', function(){
+    $(this).find('form')[0].reset();
+});
+
+$('#forgotpasswordPopup').on('hidden.bs.modal', function(){
+    $(this).find('form')[0].reset();
+});
+</script>
+ 
+	</body>
+
+<!-- Mirrored from www.jumplyfe.com/welcomes/policies by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 17 Sep 2015 16:37:12 GMT -->
+</html>

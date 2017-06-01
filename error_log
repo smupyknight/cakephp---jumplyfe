@@ -1,0 +1,18 @@
+[30-Sep-2015 11:09:40 UTC] PHP Warning:  mysql_query(): Access denied for user 'root'@'localhost' (using password: NO) in /home/jumplyfe/public_html/contact_agent.php on line 371
+[30-Sep-2015 11:09:40 UTC] PHP Warning:  mysql_query(): A link to the server could not be established in /home/jumplyfe/public_html/contact_agent.php on line 371
+[30-Sep-2015 12:00:25 UTC] PHP Warning:  mysql_query(): Access denied for user 'root'@'localhost' (using password: NO) in /home/jumplyfe/public_html/contact_agent.php on line 371
+[30-Sep-2015 12:00:25 UTC] PHP Warning:  mysql_query(): A link to the server could not be established in /home/jumplyfe/public_html/contact_agent.php on line 371
+[30-Sep-2015 12:02:07 UTC] PHP Warning:  mysql_query(): Access denied for user 'root'@'localhost' (using password: NO) in /home/jumplyfe/public_html/login.php on line 8
+[30-Sep-2015 12:02:07 UTC] PHP Warning:  mysql_query(): A link to the server could not be established in /home/jumplyfe/public_html/login.php on line 8
+[30-Sep-2015 12:02:07 UTC] PHP Warning:  mysql_num_rows() expects parameter 1 to be resource, boolean given in /home/jumplyfe/public_html/login.php on line 9
+[30-Sep-2015 12:43:00 UTC] PHP Warning:  mysql_query(): Access denied for user 'root'@'localhost' (using password: NO) in /home/jumplyfe/public_html/contact_agent.php on line 371
+[30-Sep-2015 12:43:00 UTC] PHP Warning:  mysql_query(): A link to the server could not be established in /home/jumplyfe/public_html/contact_agent.php on line 371
+[03-Oct-2015 11:41:16 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/jumplyfe/public_html/login.php on line 11
+[03-Oct-2015 11:43:16 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/jumplyfe/public_html/login.php on line 11
+[03-Oct-2015 11:43:18 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/jumplyfe/public_html/login.php on line 11
+[03-Oct-2015 11:43:19 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/jumplyfe/public_html/login.php on line 11
+[03-Oct-2015 11:43:22 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/jumplyfe/public_html/login.php on line 11
+[03-Oct-2015 11:43:22 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/jumplyfe/public_html/login.php on line 11
+[03-Oct-2015 11:57:37 UTC] PHP Parse error:  syntax error, unexpected '=' in /home/jumplyfe/public_html/login.php on line 16
+[03-Oct-2015 12:02:20 UTC] PHP Parse error:  syntax error, unexpected 'else' (T_ELSE) in /home/jumplyfe/public_html/login.php on line 24
+[03-Oct-2015 12:02:32 UTC] PHP Parse error:  syntax error, unexpected 'else' (T_ELSE) in /home/jumplyfe/public_html/login.php on line 24

@@ -1,0 +1,21 @@
+.nav-header {
+	background: url("../img/header-profile.png");
+}
+
+#page-wrapper .wrapper {
+	height: 128px;
+}
+
+.feed-element {
+	padding-bottom: 0px;
+}
+
+.profile-element img{
+	width: 70px;
+	height: 70px;
+}
+
+.error {
+	margin-left: 40px !important;
+	color: #aa0022;
+}

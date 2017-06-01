@@ -1,0 +1,12 @@
+﻿body {
+}
+
+.signInTextBox{
+    width:200px;
+    padding:5px;
+}
+.signInButton{
+    width:210px;
+    background-color:#5b98fa;
+    padding:5px;
+}
